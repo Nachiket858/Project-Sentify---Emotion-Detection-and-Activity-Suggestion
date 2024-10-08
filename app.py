@@ -1,7 +1,8 @@
 import cv2
 from deepface import DeepFace
 from flask import Flask, Response, render_template, jsonify
-from bard import suggest_activity  # Import the ChatGPT API handler
+from bard import suggest_activity
+import requests  # Import requests to check for internet connection
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -19,6 +20,15 @@ face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fronta
 last_emotion = None
 last_gender = None
 last_activity = None
+
+# Function to check internet connectivity
+def is_connected():
+    try:
+        # Try to reach Google to check internet connection
+        requests.get("http://www.google.com", timeout=5)
+        return True
+    except (requests.ConnectionError, requests.Timeout):
+        return False
 
 # Function to generate frames for the video stream
 def generate_frames():
@@ -68,6 +78,10 @@ def video_feed():
 def detect_emotion():
     global last_emotion, last_gender, last_activity
 
+    # Check for internet connection
+    if not is_connected():
+        return jsonify({"message": "No internet connection. Please check your connection and try again."})
+
     try:
         # Capture a single frame from the webcam for detection
         success, frame = cap.read()
@@ -82,16 +96,10 @@ def detect_emotion():
         last_gender = result[0]['dominant_gender']
 
         # Print the entire DeepFace result to the console
-        print(f"***************************************************DeepFace Analysis: {result[0]}")
-
-        # Print additional information from DeepFace result
-        # for key, value in result[0].items():
-        #     print(f"{key}: {value}")
+        print(f"DeepFace Analysis: {result[0]}")
 
         # Call the OpenAI/ChatGPT API to get an activity suggestion based on the detected emotion
         last_activity = suggest_activity(result[0])
-
-        
 
         return jsonify({
             "message": "Emotion detection successful", 

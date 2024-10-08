@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emotion Detection</title>
-    
 </head>
 <body>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <h1  class="center">Live Emotion Detection with Activity Suggestion</h1>
+    <h1 class="center">Live Emotion Detection with Activity Suggestion</h1>
     <div style="display: flex; align-items: center;">
         <img src="{{ url_for('video_feed') }}" width="640" height="480" style="margin-right: 20px;">
         <div>
@@ -25,10 +24,14 @@
             fetch('/detect_emotion', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
-                    // Update the detected emotion, gender, and suggested activity on the page
-                    document.getElementById('emotionText').innerText = `Detected Emotion: ${data.emotion || 'None'}`;
-                    document.getElementById('genderText').innerText = `Detected Gender: ${data.gender || 'None'}`;
-                    document.getElementById('activityText').innerText = `Suggested Activity: ${data.activity || 'None'}`;
+                    if (data.message === "No internet connection. Please check your connection and try again.") {
+                        alert(data.message);  // Show an alert for no internet connection
+                    } else {
+                        // Update the detected emotion, gender, and suggested activity on the page
+                        document.getElementById('emotionText').innerText = `Detected Emotion: ${data.emotion || 'None'}`;
+                        document.getElementById('genderText').innerText = `Detected Gender: ${data.gender || 'None'}`;
+                        document.getElementById('activityText').innerText = `Suggested Activity: ${data.activity || 'None'}`;
+                    }
                 });
         }
     </script>

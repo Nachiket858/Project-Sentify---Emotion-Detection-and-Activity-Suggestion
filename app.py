@@ -1,7 +1,7 @@
 import cv2
 from deepface import DeepFace
 from flask import Flask, Response, render_template, jsonify
-from chatgptapi import suggest_activity  # Import the ChatGPT API handler
+from bard import suggest_activity  # Import the ChatGPT API handler
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -38,11 +38,11 @@ def generate_frames():
             # Draw rectangles around detected faces
             for (x, y, w, h) in faces:
                 # Draw rectangle around the face
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
                 # Display detected emotion on the frame if available
                 if last_emotion:
-                    cv2.putText(frame, f"Emotion: {last_emotion}", (x, y - 10), 
+                    cv2.putText(frame, f"{last_emotion}", (x, y - 10), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
             # Encode frame in JPEG format
@@ -82,18 +82,16 @@ def detect_emotion():
         last_gender = result[0]['dominant_gender']
 
         # Print the entire DeepFace result to the console
-        print(f"DeepFace Analysis: {result[0]}")
+        print(f"***************************************************DeepFace Analysis: {result[0]}")
 
         # Print additional information from DeepFace result
-        for key, value in result[0].items():
-            print(f"{key}: {value}")
+        # for key, value in result[0].items():
+        #     print(f"{key}: {value}")
 
         # Call the OpenAI/ChatGPT API to get an activity suggestion based on the detected emotion
-        last_activity = suggest_activity(last_emotion)
+        last_activity = suggest_activity(result[0])
 
-        # Print the activity suggestion in the console
-        print(f"Suggested Activity: {last_activity}")
-        print(f"Detected Gender: {last_gender}")
+        
 
         return jsonify({
             "message": "Emotion detection successful", 

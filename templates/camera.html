@@ -14,7 +14,7 @@
     <br><br>
 
     <!-- Detect Emotion Button -->
-    <button onclick="detectEmotion()">Detect Emotion</button>
+    <button onclick="checkInternetAndDetectEmotion()">Detect Emotion</button>
 
     <!-- Display Detected Information -->
     <p id="emotionText">Detected Emotion: None</p>
@@ -26,6 +26,25 @@
     <button onclick="switchToUploadMode()">Switch to Image Upload Mode</button>
 
     <script>
+        // Function to check for internet connection
+        function isConnected() {
+            return fetch('https://www.google.com', { method: 'HEAD', mode: 'no-cors' })
+                .then(() => true)
+                .catch(() => false);
+        }
+
+        // Function to detect emotion after checking the internet connection
+        function checkInternetAndDetectEmotion() {
+            isConnected().then(connected => {
+                if (connected) {
+                    detectEmotion();
+                } else {
+                    alert("No internet connection. Please check your connection and try again.");
+                }
+            });
+        }
+
+        // Function to detect emotion by calling the backend endpoint
         function detectEmotion() {
             fetch('/detect_emotion', { method: 'POST' })
                 .then(response => response.json())
@@ -33,6 +52,9 @@
                     document.getElementById('emotionText').innerText = `Detected Emotion: ${data.emotion}`;
                     document.getElementById('genderText').innerText = `Detected Gender: ${data.gender}`;
                     document.getElementById('activityText').innerText = `Suggested Activity: ${data.activity}`;
+                })
+                .catch(error => {
+                    alert("Error detecting emotion. Please try again.");
                 });
         }
 

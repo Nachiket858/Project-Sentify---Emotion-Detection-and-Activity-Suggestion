@@ -18,13 +18,6 @@ last_emotion = None
 last_gender = None
 last_activity = None
 
-# Function to check internet connection
-def is_connected():
-    try:
-        requests.get("http://www.google.com", timeout=5)
-        return True
-    except (requests.ConnectionError, requests.Timeout):
-        return False
 
 # Route for mode selection page
 @app.route('/')
@@ -84,8 +77,7 @@ def video_feed():
 @app.route('/detect_emotion', methods=['POST'])
 def detect_emotion():
     global last_emotion, last_gender, last_activity
-    if not is_connected():
-        return jsonify({"message": "No internet connection. Please check your connection and try again."})
+    
     try:
         success, frame = cap.read()
         if not success:
@@ -109,8 +101,7 @@ def detect_emotion():
 @app.route('/upload_image', methods=['POST'])
 def upload_image():
     global last_emotion, last_gender, last_activity
-    if not is_connected():
-        return jsonify({"message": "No internet connection. Please check your connection and try again."})
+    
     try:
         file = request.files['file']
         img = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)

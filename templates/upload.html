@@ -11,10 +11,10 @@
     
     <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
     
-
     <h3>Uploaded Image:</h3>
     <img id="uploadedImage" src="" alt="Uploaded Image" style="display:none; max-width: 400px; margin-bottom: 20px;">
-    <button onclick="uploadImage()">Upload Image</button>
+    <button onclick="checkInternetAndUpload()">Detect Emotion</button>
+
     <p id="emotionText">Detected Emotion: None</p>
     <p id="genderText">Detected Gender: None</p>
     <p id="activityText">Suggested Activity: None</p>
@@ -22,12 +22,32 @@
     <button onclick="switchMode()">Switch to Camera Mode</button>
 
     <script>
+        // Function to check for internet connection
+        function isConnected() {
+            return fetch('https://www.google.com', { method: 'HEAD', mode: 'no-cors' })
+                .then(() => true)
+                .catch(() => false);
+        }
+
+        // Function to check for internet connection and upload image
+        function checkInternetAndUpload() {
+            isConnected().then(connected => {
+                if (connected) {
+                    uploadImage();
+                } else {
+                    alert("No internet connection. Please check your connection and try again.");
+                }
+            });
+        }
+
+        // Function to preview uploaded image
         function previewImage(event) {
             const image = document.getElementById('uploadedImage');
             image.src = URL.createObjectURL(event.target.files[0]);
             image.style.display = 'block'; // Show the image
         }
 
+        // Function to upload the image
         function uploadImage() {
             let fileInput = document.getElementById('imageInput');
             let formData = new FormData();
@@ -43,6 +63,7 @@
                 .catch(error => console.error('Error:', error));
         }
 
+        // Function to switch to Camera Mode
         function switchMode() {
             window.location.href = '/camera'; // Redirect to camera mode
         }

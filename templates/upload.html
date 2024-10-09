@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload Mode</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Emotion Detection - Image Upload Mode</h1>
+    
+    <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
+    
+
+    <h3>Uploaded Image:</h3>
+    <img id="uploadedImage" src="" alt="Uploaded Image" style="display:none; max-width: 400px; margin-bottom: 20px;">
+    <button onclick="uploadImage()">Upload Image</button>
+    <p id="emotionText">Detected Emotion: None</p>
+    <p id="genderText">Detected Gender: None</p>
+    <p id="activityText">Suggested Activity: None</p>
+
+    <button onclick="switchMode()">Switch to Camera Mode</button>
+
+    <script>
+        function previewImage(event) {
+            const image = document.getElementById('uploadedImage');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block'; // Show the image
+        }
+
+        function uploadImage() {
+            let fileInput = document.getElementById('imageInput');
+            let formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            fetch('/upload_image', { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('emotionText').innerText = `Detected Emotion: ${data.emotion}`;
+                    document.getElementById('genderText').innerText = `Detected Gender: ${data.gender}`;
+                    document.getElementById('activityText').innerText = `Suggested Activity: ${data.activity}`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function switchMode() {
+            window.location.href = '/camera'; // Redirect to camera mode
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Mode</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Emotion Detection - Camera Mode</h1>
+    
+    <!-- Video feed -->
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    <br><br>
+
+    <!-- Detect Emotion Button -->
+    <button onclick="detectEmotion()">Detect Emotion</button>
+
+    <!-- Display Detected Information -->
+    <p id="emotionText">Detected Emotion: None</p>
+    <p id="genderText">Detected Gender: None</p>
+    <p id="activityText">Suggested Activity: None</p>
+
+    <!-- Button to switch to Image Upload Mode -->
+    <br><br>
+    <button onclick="switchToUploadMode()">Switch to Image Upload Mode</button>
+
+    <script>
+        function detectEmotion() {
+            fetch('/detect_emotion', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('emotionText').innerText = `Detected Emotion: ${data.emotion}`;
+                    document.getElementById('genderText').innerText = `Detected Gender: ${data.gender}`;
+                    document.getElementById('activityText').innerText = `Suggested Activity: ${data.activity}`;
+                });
+        }
+
+        // Function to switch to Image Upload Mode
+        function switchToUploadMode() {
+            window.location.href = "/upload";  // Redirects to the Image Upload page
+        }
+    </script>
+</body>
+</html>

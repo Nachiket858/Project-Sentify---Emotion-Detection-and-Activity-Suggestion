@@ -13,8 +13,8 @@
     <img src="{{ url_for('video_feed') }}" width="640" height="480">
     <br><br>
 
-    <!-- Detect Emotion Button -->
-    <button onclick="checkInternetAndDetectEmotion()">Detect Emotion</button>
+    <!-- Remove Detect Emotion Button -->
+    <!-- <button onclick="checkInternetAndDetectEmotion()">Detect Emotion</button> -->
 
     <!-- Display Detected Information -->
     <p id="emotionText">Detected Emotion: None</p>
@@ -33,17 +33,6 @@
                 .catch(() => false);
         }
 
-        // Function to detect emotion after checking the internet connection
-        function checkInternetAndDetectEmotion() {
-            isConnected().then(connected => {
-                if (connected) {
-                    detectEmotion();
-                } else {
-                    alert("No internet connection. Please check your connection and try again.");
-                }
-            });
-        }
-
         // Function to detect emotion by calling the backend endpoint
         function detectEmotion() {
             fetch('/detect_emotion', { method: 'POST' })
@@ -58,10 +47,27 @@
                 });
         }
 
+        // Automatically detect emotion every 30 seconds
+        function detectEmotionPeriodically() {
+            isConnected().then(connected => {
+                if (connected) {
+                    detectEmotion();
+                } else {
+                    alert("No internet connection. Please check your connection.");
+                }
+            });
+        }
+
+        // Call the function every 30 seconds
+        setInterval(detectEmotionPeriodically, 15000); // 30,000 milliseconds = 30 seconds
+
         // Function to switch to Image Upload Mode
         function switchToUploadMode() {
             window.location.href = "/upload";  // Redirects to the Image Upload page
         }
+
+        // Initial emotion detection when the page loads
+        detectEmotionPeriodically();
     </script>
 </body>
 </html>

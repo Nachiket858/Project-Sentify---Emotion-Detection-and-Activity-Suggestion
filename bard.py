@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
 # Replace with your actual Google Gemini (Bard) API key
-genai.configure(api_key="API ID HERE")
+genai.configure(api_key="AIzaSyBOvruRmo6LD2O1s_1nXXY9zoIEkYzTjy8")
 
 # Function to process DeepFace results and send them to Gemini for activity suggestions
 def suggest_activity(deepface_result):
@@ -28,7 +28,7 @@ def suggest_activity(deepface_result):
                   f"Face Confidence: {face_confidence}\n"
                   f"Age: {age}\n"
                   "Please suggest one suitable activity based on this person's emotions. "
-                  "Only return one activity, and 2 to 3 line discription of it.")
+                  "Only return one activity, and 2 to 3 line discription of it.do not related this responce to preivous")
 
         # Generate content using the model
         response = model.generate_content(prompt)

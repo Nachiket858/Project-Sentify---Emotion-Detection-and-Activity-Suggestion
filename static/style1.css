@@ -1,0 +1,80 @@
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #1c1f24;
+    color: #dcdcdc; 
+    margin: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-image: linear-gradient(115deg, #1c1f24 50%, #2a2e35 100%);
+}
+
+
+h1 {
+    color: #f4f4f4; 
+    font-size: 40px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); 
+    font-weight: 700;
+    border-bottom: 2px solid #c0a062; 
+    padding-bottom: 10px;
+}
+
+img {
+    border: 8px solid #333; 
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); 
+    margin-bottom: 30px;
+    width: 70%; 
+}
+
+
+button {
+    background-color: #c0a062; 
+    color: #1c1f24; 
+    padding: 15px 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(192, 160, 98, 0.4); 
+}
+
+button:hover {
+    background-color: #a88445; 
+    box-shadow: 0 8px 20px rgba(192, 160, 98, 0.6); 
+}
+
+
+#emotionText, #genderText, #activityText {
+    font-size: 22px;
+    color: #f4f4f4; 
+    margin: 10px 0;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); 
+}
+
+
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+    }
+}

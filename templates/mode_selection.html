@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mode Selection</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+    
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.32/build/spline-viewer.js"></script>
+
+   
 </head>
-<body>
-    <h1>Select a Mode</h1>
-    <div>
-        <button onclick="location.href='/camera'">Camera Mode</button>
-        <button onclick="location.href='/upload'">Image Upload Mode</button>
+<body class="">
+    <div class="button-container ">
+        <div class="content">
+            <button onclick="location.href='/camera'">Camera Mode</button>
+        </div>
+    </div>
+    
+    <div class="spline-viewer-container">
+        <spline-viewer url="https://prod.spline.design/18L3dTV9MS54TUwA/scene.splinecode"></spline-viewer>
+    </div>
+
+    <div class="button-container">
+        <div class="content">
+            <button onclick="location.href='/upload'">Upload Image </button>
+        </div>
     </div>
 </body>
 </html>

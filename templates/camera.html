@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Mode</title>
+    <title>Emotion Camera Mode</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <h1 >Emotion Detection - Camera Mode</h1>
-    
-    <!-- Video feed -->
-    <img src="{{ url_for('video_feed') }}" width="640" height="480">
-    <br><br>
+    <div class="container">
+        <!-- Left side: Camera feed -->
+        <div class="camera-feed">
+            <h2 class="camera-title">Sentify</h2> <!-- Title above the camera -->
+            <img src="{{ url_for('video_feed') }}" alt="Camera Feed">
+        </div>
 
-    <!-- Remove Detect Emotion Button -->
-    <!-- <button onclick="checkInternetAndDetectEmotion()">Detect Emotion</button> -->
-
-    <!-- Display Detected Information -->
-    <p id="emotionText">Detected Emotion: None</p>
-    <p id="genderText">Detected Gender: None</p>
-    <p id="activityText">Suggested Activity: None</p>
-
-    <!-- Button to switch to Image Upload Mode -->
-    <br><br>
-    <button onclick="switchToUploadMode()">Switch to Image Upload Mode</button>
+        <!-- Right side: Detected information -->
+        <div class="info-panel">
+            <h1>Emotion Detection</h1>
+            <p id="emotionText">Detected Emotion: None</p>
+            <p id="genderText">Detected Gender: None</p>
+            <p id="activityText">Suggested Activity: None</p>
+            <div class="loading" id="loading">Loading...</div>
+            <button onclick="switchToUploadMode()">Switch to Image Upload Mode</button>
+        </div>
+    </div>
 
     <script>
         // Function to check for internet connection
@@ -35,19 +37,22 @@
 
         // Function to detect emotion by calling the backend endpoint
         function detectEmotion() {
+            document.getElementById('loading').style.display = 'block'; // Show loading
             fetch('/detect_emotion', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('emotionText').innerText = `Detected Emotion: ${data.emotion}`;
                     document.getElementById('genderText').innerText = `Detected Gender: ${data.gender}`;
                     document.getElementById('activityText').innerText = `Suggested Activity: ${data.activity}`;
+                    document.getElementById('loading').style.display = 'none'; // Hide loading
                 })
                 .catch(error => {
                     alert("Error detecting emotion. Please try again.");
+                    document.getElementById('loading').style.display = 'none'; // Hide loading
                 });
         }
 
-        // Automatically detect emotion every 30 seconds
+        // Automatically detect emotion every 15 seconds
         function detectEmotionPeriodically() {
             isConnected().then(connected => {
                 if (connected) {
@@ -58,12 +63,12 @@
             });
         }
 
-        // Call the function every 30 seconds
-        setInterval(detectEmotionPeriodically, 15000); // 30,000 milliseconds = 30 seconds
+        // Call the function every 15 seconds
+        setInterval(detectEmotionPeriodically, 15000);
 
         // Function to switch to Image Upload Mode
         function switchToUploadMode() {
-            window.location.href = "/upload";  // Redirects to the Image Upload page
+            window.location.href = "/upload";  // Redirect to the Image Upload page
         }
 
         // Initial emotion detection when the page loads

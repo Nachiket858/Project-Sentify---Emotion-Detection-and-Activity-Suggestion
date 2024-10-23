@@ -1,91 +1,114 @@
-body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #1c1f24;
-    color: #dcdcdc;
+/* General body and layout */
+body, html {
     margin: 0;
-    padding: 30px;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif; /* Clean, modern font */
+    background-color: #f7f7f7; /* Light background */
+    color: #333; /* Darker text color for contrast */
+}
+
+/* Fullscreen container with split layout */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh; /* Full screen height */
+    background: linear-gradient(135deg, rgba(255, 200, 100, 0.8), rgba(255, 140, 70, 0.6)); /* Same background as camera mode */
+}
+
+/* Left side: Image upload section */
+.upload-section {
+    flex: 0 0 60%; /* Set to 60% of the width */
+    display: flex;
+    flex-direction: column; /* Stack title and input vertically */
+    justify-content: flex-start; /* Align items to the top */
+    align-items: center; /* Center items horizontally */
+    padding: 20px; /* Add some padding */
+}
+
+/* Logo area */
+.logo-container {
+    width: 100%; /* Full width */
+    display: flex; /* Flex for alignment */
+    justify-content: flex-start; /* Align logo to the left */
+}
+
+/* Logo title */
+.camera-title {
+    font-size: 24px; /* Adjust size */
+    font-weight: bold; /* Make it bold */
+    color: #ff5722; /* Dark orange color for contrast */
+    margin: 0; /* Remove margin to eliminate space */
+}
+
+/* Animation for the uploaded image */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Loading indicator */
+.loading {
+    font-size: 18px;
+    color: #f39c12; /* Bright orange */
+    margin: 10px 0;
+}
+
+/* Right side: Detected emotion and activity information */
+.info-panel {
+    flex: 1; /* Less space for text */
+    background-color: #ffebcd; /* Light peach background */
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-image: linear-gradient(115deg, #1c1f24 50%, #2a2e35 100%);
+    text-align: center;
+    padding: 40px;
+    border-left: 2px solid #f1c40f; /* Light yellow border for separation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
 }
 
-h1 {
-    color: #f4f4f4;
-    font-size: 36px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-    font-weight: 700;
-    border-bottom: 2px solid #c0a062;
-    padding-bottom: 10px;
+/* Emotion text styling */
+.info-panel p {
+    font-size: 20px;
+    color: #333;
+    margin: 15px 0;
+    font-weight: bold;
 }
 
-input[type="file"] {
-    background-color: #c0a062;
-    color: #1c1f24;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-#uploadedImage {
-    border: 5px solid #333;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
-    max-width: 100%;
-    margin-bottom: 20px;
-    display: block;
-}
-
+/* Button styles */
 button {
-    background-color: #c0a062;
-    color: #1c1f24;
-    padding: 12px 30px;
+    background-color: #f39c12; /* Bright orange button */
+    color: white;
+    padding: 15px 50px;
     font-size: 18px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px;
-    box-shadow: 0 6px 15px rgba(192, 160, 98, 0.4);
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #a88445;
-    box-shadow: 0 8px 20px rgba(192, 160, 98, 0.6);
+    background-color: #e67e22; /* Darker orange on hover */
 }
 
-#emotionText, #genderText, #activityText {
-    font-size: 22px;
-    color: #f4f4f4;
-    margin: 10px 0;
-    text-align: center;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
+/* Responsive design */
 @media (max-width: 768px) {
-    body {
-        padding: 15px;
+    .container {
+        flex-direction: column; /* Stack sections */
     }
 
-    button {
+    .upload-section, .info-panel {
         width: 100%;
-        padding: 14px;
-    }
-
-    input[type="file"] {
-        width: 100%;
-        padding: 12px;
-    }
-
-    #uploadedImage {
-        max-width: 100%;
+        height: auto; /* Adjusted height for smaller screens */
     }
 }

@@ -1,80 +1,122 @@
-
-body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #1c1f24;
-    color: #dcdcdc; 
+/* General body and layout */
+body, html {
     margin: 0;
-    padding: 30px;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif; /* Clean, modern font */
+    background-color: #f7f7f7; /* Light background */
+    color: #333; /* Darker text color for contrast */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+/* Fullscreen container with split layout */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh; /* Full screen height */
+}
+
+/* Left side: Camera feed */
+.camera-feed {
+    flex: 0 0 60%; /* Set to 60% of the width */
+    display: flex;
+    flex-direction: column; /* Stack title and image vertically */
+    justify-content: flex-start; /* Align items to the top */
+    align-items: flex-start; /* Align items to the left */
+    padding: 10px; /* Add some padding */
+    background: linear-gradient(135deg, rgba(255, 200, 100, 0.8), rgba(255, 140, 70, 0.6)); /* Gradient background */
+}
+
+/* Logo area */
+.camera-title {
+    font-family:cursive;
+    font-size: 24px; /* Adjust size */
+    font-weight: bold; /* Make it bold */
+    color: #ff5722; /* Dark orange color for contrast */
+    margin: 0 0 10px 0; /* Remove top margin */
+    padding: 0; /* Remove padding */
+}
+
+
+/* Camera feed image with rectangular aspect ratio */
+.camera-feed img {
+    width: 100%; /* Full width for the camera feed */
+    height: auto; /* Maintain aspect ratio */
+    border: 2px solid #ff5722; /* Border only for the camera feed */
+    border-radius: 5px; /* Optional: rounded corners for the image */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+}
+
+/* Right side: Detected information */
+.info-panel {
+    flex: 1; /* Less space for text */
+    background-color: #ffebcd; /* Light peach background */
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-image: linear-gradient(115deg, #1c1f24 50%, #2a2e35 100%);
+    text-align: center;
+    padding: 40px;
+    border-left: 2px solid #f1c40f; /* Light yellow border for separation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    overflow: hidden; /* Prevent overflow */
 }
 
-
-h1 {
-    color: #f4f4f4; 
-    font-size: 40px;
-    margin-bottom: 25px;
+/* Header styling */
+.info-panel h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); 
-    font-weight: 700;
-    border-bottom: 2px solid #c0a062; 
-    padding-bottom: 10px;
+    color: #333;
 }
 
-img {
-    border: 8px solid #333; 
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); 
-    margin-bottom: 30px;
-    width: 70%; 
+/* Emotion text styling */
+.info-panel p {
+    font-size: 20px;
+    color: #333;
+    margin: 15px 0;
+    font-weight: bold;
 }
 
+/* Loading indicator */
+.loading {
+    font-size: 22px;
+    font-weight: bold;
+    color: #f39c12;
+    display: none; /* Hidden by default */
+}
 
+/* Button styles */
 button {
-    background-color: #c0a062; 
-    color: #1c1f24; 
-    padding: 15px 40px;
+    background-color: #f39c12; /* Bright orange button */
+    color: white;
+    padding: 15px 50px;
     font-size: 18px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 20px;
-    box-shadow: 0 6px 15px rgba(192, 160, 98, 0.4); 
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #a88445; 
-    box-shadow: 0 8px 20px rgba(192, 160, 98, 0.6); 
+    background-color: #e67e22; /* Darker orange on hover */
 }
 
-
-#emotionText, #genderText, #activityText {
-    font-size: 22px;
-    color: #f4f4f4; 
-    margin: 10px 0;
-    text-align: center;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); 
-}
-
-
+/* Responsive design */
 @media (max-width: 768px) {
-    body {
-        padding: 15px;
+    .container {
+        flex-direction: column; /* Stack sections */
     }
 
-    img {
+    .camera-feed, .info-panel {
         width: 100%;
-        height: auto;
-    }
-
-    button {
-        width: 100%;
-        padding: 14px;
+        height: 50vh; /* Adjusted height for smaller screens */
     }
 }

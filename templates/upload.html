@@ -7,19 +7,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
 </head>
 <body>
-    <h1>Emotion Detection - Image Upload Mode</h1>
-    
-    <input type="file" id="imageInput" accept="image/*" onchange="previewImageAndDetectEmotion(event)">
-    
-    <h3>Uploaded Image:</h3>
-    <img id="uploadedImage" src="" alt="Uploaded Image" style="display:none; max-width: 400px; margin-bottom: 20px;">
+    <div class="container">
+        <!-- Left side: Logo and Image upload -->
+        <div class="upload-section">
+            <div class="logo-container">
+                <h2 class="camera-title">Sentify</h2> <!-- Logo Title -->
+            </div>
+            <h1>Emotion Detection - Image Upload Mode</h1>
+            <input type="file" id="imageInput" accept="image/*" onchange="previewImageAndDetectEmotion(event)">
+            <h3>Uploaded Image:</h3>
+            <img id="uploadedImage" src="" alt="Uploaded Image" style="display:none; max-width: 400px; margin-bottom: 20px; animation: fadeIn 0.5s;">
+        </div>
 
-    <!-- Detected emotion and activity information -->
-    <p id="emotionText">Detected Emotion: None</p>
-    <p id="genderText">Detected Gender: None</p>
-    <p id="activityText">Suggested Activity: None</p>
-
-    <button onclick="switchMode()">Switch to Camera Mode</button>
+        <!-- Right side: Detected emotion and activity information -->
+        <div class="info-panel">
+            <div class="info-content">
+                <div id="loadingIndicator" class="loading" style="display:none;">Loading...</div> <!-- Loading Indicator -->
+                <p id="emotionText">Detected Emotion: None</p>
+                <p id="genderText">Detected Gender: None</p>
+                <p id="activityText">Suggested Activity: None</p>
+                <button onclick="switchMode()">Switch to Camera Mode</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Function to check for internet connection
@@ -35,6 +45,9 @@
             image.src = URL.createObjectURL(event.target.files[0]);
             image.style.display = 'block'; // Show the image
 
+            // Show animation for image upload
+            image.style.animation = 'fadeIn 0.5s'; // Add fade-in animation
+
             // Automatically call the detect emotion function after image preview
             isConnected().then(connected => {
                 if (connected) {
@@ -47,9 +60,12 @@
 
         // Function to upload image and detect emotion
         function detectEmotion() {
+            const loadingIndicator = document.getElementById('loadingIndicator');
             let fileInput = document.getElementById('imageInput');
             let formData = new FormData();
             formData.append('file', fileInput.files[0]);
+
+            loadingIndicator.style.display = 'block'; // Show loading indicator
 
             fetch('/upload_image', { method: 'POST', body: formData })
                 .then(response => response.json())
@@ -64,7 +80,10 @@
                         document.getElementById('uploadedImage').src = `data:image/jpeg;base64,${data.image_with_emotion}`;
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error:', error))
+                .finally(() => {
+                    loadingIndicator.style.display = 'none'; // Hide loading indicator after processing
+                });
         }
 
         // Function to switch to Camera Mode

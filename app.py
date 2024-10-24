@@ -133,5 +133,7 @@ def upload_image():
         return jsonify({"message": f"Error: {str(e)}"})
 
 # Run the app
+# if __name__ == "__main__":
+#     app.run(debug=True)
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug= False, host = '0.0.0.0')

@@ -1,9 +1,9 @@
 Flask==2.2.2
-numpy==1.22.4  # Compatible version with TensorFlow and DeepFace
+numpy==1.23.5  # Updated to satisfy tensorflow and opencv-python dependencies
 DeepFace==0.0.68
 opencv-python==4.5.5.64
 requests==2.26.0
 Flask-Cors==3.0.10
 gunicorn==20.1.0
-tensorflow==2.14.0  # Latest compatible version for Python 3.8+
+tensorflow==2.14.0
 Pillow==9.0.1

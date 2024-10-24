@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
 # Replace with your actual Google Gemini (Bard) API key
-genai.configure(api_key="key")
+genai.configure(api_key="AIzaSyBOvruRmo6LD2O1s_1nXXY9zoIEkYzTjy8")
 
 # Function to process DeepFace results and send them to Gemini for activity suggestions
 def suggest_activity(deepface_result):

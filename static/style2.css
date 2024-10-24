@@ -78,3 +78,18 @@ button:hover {
 .box{
     border: 2px solid black;
 }
+
+/* Position the box over the logo */
+.cover-logo-box {
+    position: absolute;
+    bottom: 0px; /* Adjust based on logo position */
+    right: 0px; /* Adjust based on logo position */
+    width: 157px;  /* Width of the box */
+    height: 56px;  /* Height of the box */
+    background-color: rgba(227, 227, 227); /* Color of the covering box */
+    z-index: 999;  /* Ensure it is above the viewer */
+}
+
+.spline-viewer-container {
+    position: relative;  /* Required for the cover to work */
+}

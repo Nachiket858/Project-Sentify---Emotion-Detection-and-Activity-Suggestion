@@ -3,41 +3,54 @@ import numpy as np
 from deepface import DeepFace
 from flask import Flask, Response, render_template, jsonify, request
 from bard import suggest_activity
-import requests
 
 app = Flask(__name__)
-
-# Initialize webcam
-cap = cv2.VideoCapture(0)
-
-if not cap.isOpened():
-    raise Exception("Could not open webcam")
 
 # Global variables for storing the last detected emotion, gender, and activity
 last_emotion = None
 last_gender = None
 last_activity = None
 
+# Initialize the webcam as None
+cap = None
+
+# Helper function to initialize the camera
+def initialize_camera():
+    global cap
+    if cap is None or not cap.isOpened():
+        cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        raise Exception("Could not open webcam")
+
+# Helper function to release the camera
+def release_camera():
+    global cap
+    if cap is not None and cap.isOpened():
+        cap.release()
 
 # Route for mode selection page
 @app.route('/')
 @app.route('/mode_selection')
 def mode_selection():
+    release_camera()  # Release the camera when switching modes
     return render_template('mode_selection.html')
 
 # Route for camera mode
 @app.route('/camera')
 def camera():
+    initialize_camera()  # Re-initialize the camera when switching to camera mode
     return render_template('camera.html')
 
 # Route for image upload mode
 @app.route('/upload')
 def upload():
+    release_camera()  # Release the camera when switching to upload mode
     return render_template('upload.html')
 
 # Generate frames from the webcam for live video feed
 def generate_frames():
     global last_emotion, last_gender, last_activity
+    initialize_camera()  # Ensure the camera is initialized before generating frames
 
     while True:
         success, frame = cap.read()

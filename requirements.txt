@@ -5,5 +5,5 @@ opencv-python==4.5.5.64
 requests==2.26.0
 Flask-Cors==3.0.10
 gunicorn==20.1.0
-tensorflow==2.10.0
+tensorflow==2.14.1  # Update this line based on your Python version
 Pillow==9.0.1

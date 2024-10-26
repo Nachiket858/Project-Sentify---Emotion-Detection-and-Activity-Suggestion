@@ -6,39 +6,12 @@
     <title>Mode Selection</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
-    
+
+   
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>😊</text></svg>">
+    <script src="{{ url_for('static', filename='mode_sel.js') }}"></script>
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.32/build/spline-viewer.js"></script>
 
-    <style>
-        /* Box container to hold both left and right parts */
-        .cover-logo-box {
-            position: absolute;
-            bottom: 0px;
-            right: 0px;
-            width: 157px;
-            height: 56px;
-            display: flex;
-            z-index: 999;
-        }
-
-        /* Both boxes start as black */
-        .left-box, .right-box {
-            width: 50%;  /* Half width for each box */
-            height: 100%;
-            background-color: rgb(57, 55, 55);  /* Initial black color */
-            transition: background-color 1s ease;  /* Smooth transition to final color */
-        }
-
-        /* Final state of the right box */
-        .right-box.final-state {
-            background-color: rgba(227, 227, 227);  /* Final white background */
-        }
-
-        /* Final state of the left box */
-        .left-box.final-state {
-            background-color: rgba(227, 227, 227);  /* Final white background */
-        }
-    </style>
 </head>
 <body>
     <div class="button-container">
@@ -48,13 +21,13 @@
     </div>
     
     <div class="spline-viewer-container">
-        <!-- The 3D Viewer -->
+       
         <spline-viewer url="https://prod.spline.design/18L3dTV9MS54TUwA/scene.splinecode"></spline-viewer>
         
-        <!-- Box to cover the logo -->
+      
         <div class="cover-logo-box">
-            <div class="left-box" id="leftBox"></div> <!-- Left box -->
-            <div class="right-box" id="rightBox"></div> <!-- Right box -->
+            <div class="left-box" id="leftBox"></div> 
+            <div class="right-box" id="rightBox"></div> 
         </div>
     </div>
 
@@ -64,16 +37,6 @@
         </div>
     </div>
 
-    <script>
-        // Change the right box to white after 1 second
-        setTimeout(function() {
-            document.getElementById('rightBox').classList.add('final-state');
-        }, 2500);  // Delay of 1 second for right box
-
-        // Change the left box to white after 2 seconds
-        setTimeout(function() {
-            document.getElementById('leftBox').classList.add('final-state');
-        }, 1900);  // Delay of 2 seconds for left box
-    </script>
+    
 </body>
 </html>

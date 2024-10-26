@@ -43,21 +43,18 @@ h1 {
 }
 
 button {
-    background-color: #c0a062;
-    color: #1c1f24;
-    padding: 15px 40px;
+    background-color: #f39c12; /* Bright orange button */
+    color: white;
+    padding: 15px 50px;
     font-size: 18px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin: 20px;
-    box-shadow: 0 6px 15px rgba(192, 160, 98, 0.4);
-}
+    margin-top: 20px;
+    transition: background-color 0.3s ease;}
 
 button:hover {
-    background-color: #a88445;
-    box-shadow: 0 8px 20px rgba(192, 160, 98, 0.6);
+    background-color: #e67e22;
 }
 
 @media (max-width: 768px) {
@@ -82,14 +79,42 @@ button:hover {
 /* Position the box over the logo */
 .cover-logo-box {
     position: absolute;
-    bottom: 0px; /* Adjust based on logo position */
-    right: 0px; /* Adjust based on logo position */
-    width: 157px;  /* Width of the box */
-    height: 56px;  /* Height of the box */
-    background-color: rgba(227, 227, 227); /* Color of the covering box */
-    z-index: 999;  /* Ensure it is above the viewer */
+    bottom: 0px; 
+    right: 0px; 
+    width: 157px;  
+    height: 56px;  
+    background-color: rgba(227, 227, 227); 
+    z-index: 999;  
 }
 
 .spline-viewer-container {
-    position: relative;  /* Required for the cover to work */
+    position: relative;  
+}
+
+.cover-logo-box {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 157px;
+    height: 56px;
+    display: flex;
+    z-index: 999;
+}
+
+
+.left-box, .right-box {
+    width: 50%;  
+    height: 100%;
+    background-color: rgb(57, 55, 55);  
+    transition: background-color 1s ease;  
+}
+
+
+.right-box.final-state {
+    background-color: rgba(227, 227, 227);  
+}
+
+/* Final state of the left box */
+.left-box.final-state {
+    background-color: rgba(227, 227, 227);  
 }

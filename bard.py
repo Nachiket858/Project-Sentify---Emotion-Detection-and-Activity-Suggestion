@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
-# Replace with your actual Google Gemini (Bard) API key
-genai.configure(api_key="AIzaSyBOvruRmo6LD2O1s_1nXXY9zoIEkYzTjy8")
+
+genai.configure(api_key="API_KEY_HERE")
 
 # Function to process DeepFace results and send them to Gemini for activity suggestions
 def suggest_activity(deepface_result):
@@ -11,16 +11,16 @@ def suggest_activity(deepface_result):
 
         # Extract relevant fields from DeepFace result
         emotion = deepface_result['dominant_emotion']
-        emotion_percentages = deepface_result.get('emotion', {})  # Emotion percentages
+        emotion_percentages = deepface_result.get('emotion', {})  
         gender = deepface_result['dominant_gender']
-        face_confidence = deepface_result.get('face_confidence', 'unknown')  # Optional field
-        age = deepface_result.get('age', 'unknown')  # Optional field if included in your analysis
+        face_confidence = deepface_result.get('face_confidence', 'unknown')  
+        age = deepface_result.get('age', 'unknown')  
         
 
         # Convert the emotion percentages to a readable format
         emotion_str = ", ".join([f"{key}: {value:.2f}%" for key, value in emotion_percentages.items()])
         print("*************************************"+emotion_str)
-        # Define a prompt for the Gemini model, including emotion percentages
+       
         prompt = (f"Based on the following information, suggest an activity:\n"
                   f"Dominant Emotion: {emotion}\n"
                   f"Emotion Percentages: {emotion_str}\n"

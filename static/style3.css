@@ -1,4 +1,4 @@
-/* General body and layout */
+
 body, html {
     margin: 0;
     padding: 0;
@@ -7,9 +7,9 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Poppins', sans-serif; /* Clean, modern font */
-    background-color: #f7f7f7; /* Light background */
-    color: #333; /* Darker text color for contrast */
+    font-family: 'Poppins', sans-serif; 
+    background-color: #f7f7f7; 
+    color: #333; 
 }
 
 /* Fullscreen container with split layout */
@@ -62,7 +62,8 @@ body, html {
     margin: 10px 0;
 }
 
-/* Right side: Detected emotion and activity information */
+
+
 .info-panel {
     flex: 1; /* Less space for text */
     background-color: #ffebcd; /* Light peach background */
@@ -98,7 +99,7 @@ button {
 }
 
 button:hover {
-    background-color: #e67e22; /* Darker orange on hover */
+    background-color: #e67e22; 
 }
 
 /* Responsive design */

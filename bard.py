@@ -1,7 +1,7 @@
 import google.generativeai as genai
 
 
-genai.configure(api_key="API_KEY_HERE")
+genai.configure(api_key="AIzaSyBOvruRmo6LD2O1s_1nXXY9zoIEkYzTjy8")
 
 # Function to process DeepFace results and send them to Gemini for activity suggestions
 def suggest_activity(deepface_result):
@@ -10,16 +10,27 @@ def suggest_activity(deepface_result):
         model = genai.GenerativeModel(model_name="gemini-1.5-pro")
 
         # Extract relevant fields from DeepFace result
-        emotion = deepface_result['dominant_emotion']
-        emotion_percentages = deepface_result.get('emotion', {})  
-        gender = deepface_result['dominant_gender']
-        face_confidence = deepface_result.get('face_confidence', 'unknown')  
-        age = deepface_result.get('age', 'unknown')  
-        
+        emotion = deepface_result.get('dominant_emotion', 'unknown')
+        emotion_percentages = deepface_result.get('emotion', {})
+        gender = deepface_result.get('dominant_gender', 'unknown')
+        face_confidence = deepface_result.get('face_confidence', 'unknown')
+        age = deepface_result.get('age', 'unknown')
+
+        # Validate extracted fields
+        if not emotion or not emotion_percentages or not gender:
+            return "Insufficient information to suggest an activity."
 
         # Convert the emotion percentages to a readable format
         emotion_str = ", ".join([f"{key}: {value:.2f}%" for key, value in emotion_percentages.items()])
-        print("*************************************"+emotion_str)
+
+        prompt = (f"Based on the following information, suggest an activity:\n"
+                  f"Dominant Emotion: {emotion}\n"
+                  f"Emotion Percentages: {emotion_str}\n"
+                  f"Gender: {gender}\n"
+                  f"Face Confidence: {face_confidence}\n"
+                  f"Age: {age}\n"
+                  "Please suggest one suitable activity based on this person's emotions. "
+                  "Only return one activity, and 2 to **********"+emotion_str)
        
         prompt = (f"Based on the following information, suggest an activity:\n"
                   f"Dominant Emotion: {emotion}\n"

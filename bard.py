@@ -1,7 +1,6 @@
 import google.generativeai as genai
 
-
-genai.configure(api_key="api here")
+genai.configure(api_key="api_key_here")
 
 # Function to process DeepFace results and send them to Gemini for activity suggestions
 def suggest_activity(deepface_result):
@@ -16,7 +15,7 @@ def suggest_activity(deepface_result):
         face_confidence = deepface_result.get('face_confidence', 'unknown')
         age = deepface_result.get('age', 'unknown')
 
-        # Validate extracted fields
+        # Validate extracted fields      
         if not emotion or not emotion_percentages or not gender:
             return "Insufficient information to suggest an activity."
 

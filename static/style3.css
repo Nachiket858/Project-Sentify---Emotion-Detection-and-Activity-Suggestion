@@ -43,6 +43,7 @@ body, html {
     font-weight: bold; /* Make it bold */
     color: #ff5722; /* Dark orange color for contrast */
     margin: 0; /* Remove margin to eliminate space */
+    cursor: pointer;
 }
 
 /* Animation for the uploaded image */

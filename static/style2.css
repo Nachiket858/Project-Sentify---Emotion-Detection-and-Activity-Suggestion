@@ -1,11 +1,43 @@
-body, html {
+/* General styling for body and html */
+html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     width: 100%;
     display: flex;
-    overflow: hidden;
+    flex-direction: column;
     background: rgba(227, 227, 227);
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #f8f9fa;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-nav .nav-item {
+    padding-left: 15px;
+}
+
+.nav-link {
+    color: #000;
+}
+
+.nav-link:hover {
+    color: #f39c12;
+}
+
+/* Main content area */
+.main-container {
+    display: flex;
+    flex: 1;  /* Takes remaining height */
+    height: 100vh;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .button-container {
@@ -15,33 +47,20 @@ body, html {
     align-items: center;
     color: #dcdcdc;
     padding: 20px;
-    width: 100%;
 }
 
 .spline-viewer-container {
     flex: 2;
-    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 0;
     width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-.content {
-    text-align: center;
-    z-index: 1;
-}
-
-h1 {
-    color: #f4f4f4;
-    font-size: 40px;
-    margin-bottom: 40px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
-    font-weight: 700;
-    border-bottom: 2px solid #c0a062;
-    padding-bottom: 10px;
-}
-
+/* Button styling */
 button {
     background-color: #f39c12; /* Bright orange button */
     color: white;
@@ -51,45 +70,14 @@ button {
     border-radius: 30px;
     cursor: pointer;
     margin-top: 20px;
-    transition: background-color 0.3s ease;}
+    transition: background-color 0.3s ease;
+}
 
 button:hover {
     background-color: #e67e22;
 }
 
-@media (max-width: 768px) {
-    .button-container {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-        padding: 14px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-}
-.box{
-    border: 2px solid black;
-}
-
-/* Position the box over the logo */
-.cover-logo-box {
-    position: absolute;
-    bottom: 0px; 
-    right: 0px; 
-    width: 157px;  
-    height: 56px;  
-    background-color: rgba(227, 227, 227); 
-    z-index: 999;  
-}
-
-.spline-viewer-container {
-    position: relative;  
-}
+/* Styling for the logo hiding box inside spline section */
 
 .cover-logo-box {
     position: absolute;
@@ -109,12 +97,32 @@ button:hover {
     transition: background-color 1s ease;  
 }
 
-
-.right-box.final-state {
-    background-color: rgba(227, 227, 227);  
+/* Final state: changes background to match page background */
+.left-box.final-state, .right-box.final-state {
+    background-color: rgba(227, 227, 227);  /* Match background */
 }
 
-/* Final state of the left box */
-.left-box.final-state {
-    background-color: rgba(227, 227, 227);  
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    .button-container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+    }
+}
+.logo-title {
+    font-family: cursive;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff5722;
+    margin: 0 0 10px 0;
+    padding: 0;
+    cursor: pointer;
+}
+.back{
+    background-color: red;
 }

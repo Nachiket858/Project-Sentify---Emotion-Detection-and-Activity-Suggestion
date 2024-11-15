@@ -35,6 +35,7 @@ body, html {
     color: #ff5722;
     margin: 0 0 10px 0;
     padding: 0;
+    cursor: pointer;
 }
 
 .camera-feed img {

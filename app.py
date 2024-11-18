@@ -11,8 +11,8 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Set a secret key for sessions
 
 # Configure MongoDB with Sentify database
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/Sentify"
-app.config["MONGO_URI"] = "mongodb+srv://nachiket:pass123@cluster0.bppyd.mongodb.net/Sentify?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/Sentify"
+#app.config["MONGO_URI"] = "mongodb+srv://nachiket:pass123@cluster0.bppyd.mongodb.net/Sentify?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 
@@ -45,9 +45,10 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+        email = request.form.get("email")
         
-        # Check if username already exists
-        existing_user = users.find_one({"username": username})
+        # Check if username and email already exists
+        existing_user = users.find_one({"username": username,'email':email})
         
         if existing_user:
             flash("Username already exists!")
@@ -55,7 +56,7 @@ def register():
         
         # Hash password and save user
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-        users.insert_one({"username": username, "password": hashed_password})
+        users.insert_one({"username": username, "password": hashed_password,"Email": email})
         
         flash("Registration successful! You can now log in.")
         return redirect(url_for("login"))

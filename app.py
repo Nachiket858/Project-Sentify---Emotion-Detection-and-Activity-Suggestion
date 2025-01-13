@@ -16,6 +16,8 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/Sentify"
 mongo = PyMongo(app)
 bcrypt = Bcrypt(app)
 
+
+
 # Access the 'users' collection in the 'Sentify' database
 users = mongo.db.users
 
@@ -99,7 +101,6 @@ def mode_selection():
     # Pass the username to the template
     return render_template('mode_selection.html', username=user["username"])
 
-
 # Camera Mode Route
 @app.route('/camera')
 def camera():
@@ -149,22 +150,38 @@ def detect_emotion():
     global last_emotion, last_gender, last_activity
     
     try:
+        # Capture the frame from the webcam
         success, frame = cap.read()
         if not success:
+            print("Could not capture frame")
             return jsonify({"message": "Could not capture frame"})
 
+        # Convert to grayscale for face detection
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        # Detect faces using Haar Cascade
+        faces = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml').detectMultiScale(
+            gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+        if len(faces) == 0:
+            print("No person or face detected in the live feed.")
+            return jsonify({"message": "No person or face detected."})
+
+        # If a face is detected, proceed with emotion and gender analysis
         result = DeepFace.analyze(frame, actions=['emotion', 'gender'], enforce_detection=False)
         last_emotion = result[0]['dominant_emotion']
         last_gender = result[0]['dominant_gender']
-        last_activity = suggest_activity(result[0])
+        last_activity = suggest_activity(result[0])  # Call Bard or external system
 
+        print(f"Detected Emotion: {last_emotion}, Gender: {last_gender}, Suggested Activity: {last_activity}")
         return jsonify({
-            "message": "Emotion detection successful", 
-            "emotion": last_emotion, 
-            "gender": last_gender, 
+            "message": "Emotion detection successful",
+            "emotion": last_emotion,
+            "gender": last_gender,
             "activity": last_activity
         })
     except Exception as e:
+        print(f"Error during emotion detection: {str(e)}")
         return jsonify({"message": f"Error: {str(e)}"})
 
 # Upload image for emotion analysis
@@ -173,20 +190,36 @@ def upload_image():
     global last_emotion, last_gender, last_activity
     
     try:
+        # Retrieve the uploaded image
         file = request.files['file']
         img = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
+
+        # Convert to grayscale for face detection
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # Detect faces using Haar Cascade
+        faces = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml').detectMultiScale(
+            gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+        print(len(faces))
+        if len(faces) == 0:
+            print("No person or face detected in the uploaded image.")
+            return jsonify({"message": "No person or face detected."})
+
+        # If a face is detected, proceed with emotion and gender analysis
         result = DeepFace.analyze(img, actions=['emotion', 'gender'], enforce_detection=False)
         last_emotion = result[0]['dominant_emotion']
         last_gender = result[0]['dominant_gender']
-        last_activity = suggest_activity(result[0])
+        last_activity = suggest_activity(result[0])  # Call Bard or external system
 
+        print(f"Uploaded Image - Detected Emotion: {last_emotion}, Gender: {last_gender}, Suggested Activity: {last_activity}")
         return jsonify({
-            "message": "Image uploaded successfully", 
-            "emotion": last_emotion, 
-            "gender": last_gender, 
+            "message": "Image uploaded successfully",
+            "emotion": last_emotion,
+            "gender": last_gender,
             "activity": last_activity
         })
     except Exception as e:
+        print(f"Error during emotion detection from uploaded image: {str(e)}")
         return jsonify({"message": f"Error: {str(e)}"})
 
 # Logout Route

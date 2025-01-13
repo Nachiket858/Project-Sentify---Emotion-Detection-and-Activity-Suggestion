@@ -1,6 +1,6 @@
 import google.generativeai as genai
 
-genai.configure(api_key="you_api_key")
+genai.configure(api_key="AIzaSyCqpRCumeh9oQxSXbD5QHQDfSkO-9XlKww")
 
 # Function to process DeepFace results and send them to Gemini for activity suggestions
 def suggest_activity(deepface_result):

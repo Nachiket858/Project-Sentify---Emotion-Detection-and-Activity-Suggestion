@@ -1,12 +1,17 @@
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyCqpRCumeh9oQxSXbD5QHQDfSkO-9XlKww")
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+# Configure Gemini with the API key from .env
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 # Function to process DeepFace results and send them to Gemini for activity suggestions
 def suggest_activity(deepface_result):
     try:
         # Create a Gemini model instance
-        model = genai.GenerativeModel(model_name="gemini-1.5-pro")
+        model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
         # Extract relevant fields from DeepFace result
         emotion = deepface_result.get('dominant_emotion', 'unknown')
@@ -22,14 +27,14 @@ def suggest_activity(deepface_result):
         # Convert the emotion percentages to a readable format
         emotion_str = ", ".join([f"{key}: {value:.2f}%" for key, value in emotion_percentages.items()])
 
-        prompt = (f"Based on the following information, suggest an activity:\n"
-                  f"Dominant Emotion: {emotion}\n"
-                  f"Emotion Percentages: {emotion_str}\n"
-                  f"Gender: {gender}\n"
-                  f"Face Confidence: {face_confidence}\n"
-                  f"Age: {age}\n"
-                  "Please suggest one suitable activity based on this person's emotions. "
-                  "Only return one activity, and 2 to **********"+emotion_str)
+        # prompt = (f"Based on the following information, suggest an activity:\n"
+        #           f"Dominant Emotion: {emotion}\n"
+        #           f"Emotion Percentages: {emotion_str}\n"
+        #           f"Gender: {gender}\n"
+        #           f"Face Confidence: {face_confidence}\n"
+        #           f"Age: {age}\n"
+        #           "Please suggest one suitable activity based on this person's emotions. "
+        #           "Only return one activity, and 2 to **********"+emotion_str)
        
         prompt = (f"Based on the following information, suggest an activity:\n"
                   f"Dominant Emotion: {emotion}\n"
